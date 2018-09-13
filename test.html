@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="dataStruct.js"></script>
+<script type="text/javascript">
+	// let arr=[3,44,38,5,47,15,36,26,27,2,46,4,19,50,48];
+	// for(let i = 0; i < arr.length; i++) {
+	// 	for(let j = i + 1; j < arr.length; j++) {
+	// 		if (arr[i] > arr[j]) {
+	// 			[arr[i], arr[j]] = [arr[j], arr[i]];
+	// 			// let temp = arr[i];
+	// 			// arr[i] = arr[j];
+	// 			// arr[j] = temp;
+	// 		}
+	// 	}
+	// }
+
+	// console.log('arr:', arr);
+
+	// let arr1 = [3,44,38,5,47,15,36,26,27,2,46,4,19,50,48];
+	// let temp1 = 0;
+	// let temp2 = 0;
+	// for(let i = 0; i < arr1.length; i++) {
+	// 	temp1 = i;
+	// 	for(let j = i + 1; j < arr1.length; j++) {
+	// 		if (arr1[j] < arr1[temp1]) {
+	// 			temp1 = j;
+	// 		}
+	// 	}
+		
+	// 	[arr1[i], arr1[temp1]] = [arr1[temp1], arr1[i]];
+	// }
+
+	// console.log('arr:', arr1);
+
+	// // [4, 2]
+	// // [2, 4] --------  [2, 4, 1]
+	// // 
+	// function insertSort(arr) {
+	// 	for(let i = 1; i < arr.length; i++) {
+	// 		let key = arr[i];	// 1
+	// 		let j = i - 1;	// 4
+	// 		while(j >= 0 && arr[j] > key) {
+	// 			console.log('arr[j]:', arr[j], 'key:', key);
+	// 			arr[j + 1] = arr[j];	// [2, 4, 4]
+	// 			console.log('arr*:', arr);
+	// 			j --;
+	// 		}
+	// 		arr[j + 1] = key; 
+	// 	}
+	// 	console.log('arr---:', arr);
+	// }
+ // 	insertSort([4, 2, 1]);
+ 	// let arr1 = [3,44,38,5,47,15,36,26,27,2,46,4,19,50,48];
+
+ 	// function insertSort(arr) {
+ 	// 	// 插入排序最先就要开始从index 1 开始，是因为要有两个数才能比较
+ 	// 	for(let i = 1; i < arr.length; i++) {
+ 	// 		// 记住 i 位置的值
+ 	// 		let key = arr[i];
+ 	// 		// 和前一个数字比较
+ 	// 		let j = i - 1;
+
+ 	// 		// 这个是第i个跟之前的相比,一直比较
+ 	// 		while(j >= 0 && arr[j] > key) {
+ 	// 			arr[j + 1] = arr[j];
+ 	// 			j --;
+ 	// 		}
+
+ 	// 		arr[j + 1] = key;
+ 	// 	}
+ 	// 	return arr;
+ 	// }
+ 	// 
+ 	// function Stack() {
+
+ 	// }
+
+ 	
+
+ 	function divideBy2(decNumber) {
+ 		let hStack = new Stack();
+ 		let rem = 0;
+ 		let binaryString = '';
+
+ 		while(decNumber > 0) {
+ 			rem = decNumber % 2;
+ 			hStack.items.push(rem);
+ 			decNumber = Math.floor(decNumber / 2);
+ 			console.log(decNumber);
+ 		}
+ 		while(!hStack.isEmpty()) {
+ 			console.log(hStack.items);
+ 			binaryString += hStack.toString(hStack.items.pop());
+ 		}
+ 		return binaryString;
+ 	}
+
+ 	console.log(divideBy2(10));
+
+ 	// console.log(selectSorts(arr1));
+</script>
+</html>
