@@ -1,6 +1,3 @@
-const express = require('express');
-const router = express.router;
-const db = require('../../libs/db.js');
 /**
  * 
  * @param {*} columnNames select查询的条件，只查询一个字段的时候 就传字符串；如果是多个字段，使用数组包字符串 例：['', '']；若是多表查询 ['a.col1', 'b.col2']

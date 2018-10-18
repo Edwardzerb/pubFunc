@@ -8,101 +8,169 @@
 </body>
 <script type="text/javascript" src="dataStruct.js"></script>
 <script type="text/javascript">
-	// let arr=[3,44,38,5,47,15,36,26,27,2,46,4,19,50,48];
-	// for(let i = 0; i < arr.length; i++) {
-	// 	for(let j = i + 1; j < arr.length; j++) {
-	// 		if (arr[i] > arr[j]) {
-	// 			[arr[i], arr[j]] = [arr[j], arr[i]];
-	// 			// let temp = arr[i];
-	// 			// arr[i] = arr[j];
-	// 			// arr[j] = temp;
-	// 		}
-	// 	}
-	// }
+	class Set {
+		// 创建构造函数
+		constructor() {
+			this.items = {};
+			// 记录集合中成员的数量
+			this.size = 0;	
+		}
 
-	// console.log('arr:', arr);
+		// has(val) 查看是否拥有该元素
+		has(val) {
+			// 每个对象都有的 hasOwnproperty(val)
+			return this.items.hasOwnproperty(val);
+		}
 
-	// let arr1 = [3,44,38,5,47,15,36,26,27,2,46,4,19,50,48];
-	// let temp1 = 0;
-	// let temp2 = 0;
-	// for(let i = 0; i < arr1.length; i++) {
-	// 	temp1 = i;
-	// 	for(let j = i + 1; j < arr1.length; j++) {
-	// 		if (arr1[j] < arr1[temp1]) {
-	// 			temp1 = j;
-	// 		}
-	// 	}
-		
-	// 	[arr1[i], arr1[temp1]] = [arr1[temp1], arr1[i]];
-	// }
+		// add(val) 添加一个元素
+		add(val) {
+			// 判断是否拥有该元素
+			if (!this.has(val)) {
+				this.items[val] = val;
+				// 没添加一个元素，需要加一个
+				this.size ++;
+				return true;
+			}
+			// 如果该元素已经存在集合中
+			return false;
+		}
 
-	// console.log('arr:', arr1);
+		// delete(val)	删除一个元素
+		delete(val) {
+			if (this.has(val)) {
+				// 将items对象中的属性删除
+				delete this.items[val];
+				this.size --;
+				return true;
+			}
+			return false;
+		}
 
-	// // [4, 2]
-	// // [2, 4] --------  [2, 4, 1]
-	// // 
-	// function insertSort(arr) {
-	// 	for(let i = 1; i < arr.length; i++) {
-	// 		let key = arr[i];	// 1
-	// 		let j = i - 1;	// 4
-	// 		while(j >= 0 && arr[j] > key) {
-	// 			console.log('arr[j]:', arr[j], 'key:', key);
-	// 			arr[j + 1] = arr[j];	// [2, 4, 4]
-	// 			console.log('arr*:', arr);
-	// 			j --;
-	// 		}
-	// 		arr[j + 1] = key; 
-	// 	}
-	// 	console.log('arr---:', arr);
-	// }
- // 	insertSort([4, 2, 1]);
- 	// let arr1 = [3,44,38,5,47,15,36,26,27,2,46,4,19,50,48];
+		// clear删除所有元素
+		clear() {
+			// 直接将items赋值为一个空对就可
+			this.items = {};
+			this.size = 0;
+		}
 
- 	// function insertSort(arr) {
- 	// 	// 插入排序最先就要开始从index 1 开始，是因为要有两个数才能比较
- 	// 	for(let i = 1; i < arr.length; i++) {
- 	// 		// 记住 i 位置的值
- 	// 		let key = arr[i];
- 	// 		// 和前一个数字比较
- 	// 		let j = i - 1;
+		// keys() 方法 返回包含所有key的数组
+		keys() {
+			// 返回遍历集合的所有键名的数组
+			return Object.keys(this.items);
+		}
 
- 	// 		// 这个是第i个跟之前的相比,一直比较
- 	// 		while(j >= 0 && arr[j] > key) {
- 	// 			arr[j + 1] = arr[j];
- 	// 			j --;
- 	// 		}
+		// values 返回包含所有值的数组
+		values() {
+			return Object.values(this.items);
+		}
 
- 	// 		arr[j + 1] = key;
- 	// 	}
- 	// 	return arr;
- 	// }
- 	// 
- 	// function Stack() {
+		// forEach Set结构的键名就是键值
+		forEach(fn, context) {
+			for(let i = 0; i < this.items.length; i++) {
+				let item = Object.keys(this.items)[i];
+				fn.call(context, item, item, this.items);
+			}
+		}
 
- 	// }
 
- 	
+		// 并集
+		union(other) {
+			let union = new Set();
+			let values = this.values();
+			for(let i = 0; i < values.length; i++) {
+				union.add(values[i]);
+			}
+			// 将values重新赋值为新的集合
+			values = other.values();
+			for(let i = 0; i < values.length; i++) {
+				union.add(values[i]);
+			}
 
- 	function divideBy2(decNumber) {
- 		let hStack = new Stack();
- 		let rem = 0;
- 		let binaryString = '';
+			return union;
+		}
 
- 		while(decNumber > 0) {
- 			rem = decNumber % 2;
- 			hStack.items.push(rem);
- 			decNumber = Math.floor(decNumber / 2);
- 			console.log(decNumber);
- 		}
- 		while(!hStack.isEmpty()) {
- 			console.log(hStack.items);
- 			binaryString += hStack.toString(hStack.items.pop());
- 		}
- 		return binaryString;
- 	}
+		// 交集
+		intersect(other) {
+			let intersect = new Set();
+			let values = this.values();
+			for(let i = 0; i < values.length; i++) {
+				// 查看在other中是否存在
+				if (other.has(values[i])) {
+					// 存在 就往里面添加元素
+					intersect.add(values[i]);
+				}
+			}
+			return intersect;
+		}
 
- 	console.log(divideBy2(10));
+		// 差集	就是 A集合 - B集合
+		different(other) {
+			let different = new Set();
+			let values = this.values();
+			for(let i = 0; i < this.values.length; i++) {
+				if (!other.has(values[i])) {
+					different.add(values[i]);
+				}
+			}
+			return different;
+		}
+	}
 
- 	// console.log(selectSorts(arr1));
+	// Map 	字典
+	class Map {
+		constructor() {
+			this.items = {};
+			this.size = 0;
+		}
+
+		// has
+		has(key) {
+			return this.items.hasOwnproperty(key);
+		}
+
+		// set(key, val), 当有相同的key时，会覆盖前一个值
+		set(key, value) {
+			tihs.items[key] = value;
+			this.size ++;
+		}
+
+		// get 
+		get(key) {
+			// 判断是否有key，如果有就返回值，没有就返回undefined
+			return this.has(key) ? this.items[key] : undefined;
+		}
+
+		// delete
+		delete(key) {
+			if (this.has(key)) {
+				delete this.items[key];
+				this.size --;
+				return true;
+			}
+			return false;
+		}
+
+		clear() {
+			this.items = {};
+			this.size = 0;
+		}
+
+		// 遍历方法
+		keys() {
+			return Object.keys(this.items);
+		}
+
+		values() {
+			return Object.values(this.items);
+		}
+
+		forEach(fn, context) {
+			for(let i = 0; i < this.items.length; i++) {
+				let key = Object.keys(this.items)[i];
+				let value = Object.value(this.items)[i];
+				fn.call(context, key, value, this.items);
+			}
+		}
+	}
 </script>
 </html>
