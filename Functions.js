@@ -336,4 +336,40 @@ function extend() {
   // });
   // evt.emit('fuck', {'first': 'jhon', 'second': 'tommy'});
 
+/**
+ * [unique description]
+ * @param  {[Array]}  array    [表示要去重的数组，必填]
+ * @param  {Boolean} isSorted [表示函数传入的数组是否已排过序，如果为 true，将会采用更快的方法进行去重]
+ * @param  {[Function]}  iteratee [传入一个函数，可以对每个元素进行重新的计算，然后根据处理的结果进行去重]
+ * @return {[Array]}           [经过去重处理的数组]
+ */
+function unique(array, isSorted, iteratee) {
+  let res = [];
+  let seen = [];
+  for(let i = 0; i < array.length; i++) {
+    let value = array[i];
+    // 判断是否有需要对数组进行操作的函数
+    let computed = iteratee ? iteratee(value, i, array) : value;
 
+    // 如果有排序
+    if (isSorted) {
+      // 不是第一个 或者 前一个数不等于下一个
+      if (!i || seen !== computed) {
+        res.push(value);
+      }
+      // 把当前这个数给seen，computed就会变成下一个
+      seen = computed;
+
+    } else if (iteratee) {  // 如果有操作的函数
+      // 查找seen数组里是否有computed
+      if (seen.indexOf(computed) === -1) {
+        // 没有 就都添加
+        seen.push(computed);
+        res.push(value);
+      }
+    } else if (res.indexOf(value) === -1) { // 查看正常的情况下的res是否包含了正常值
+      res.push(value);
+    }
+  }
+  return res;
+}
