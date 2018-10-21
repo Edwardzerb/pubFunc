@@ -53,7 +53,7 @@
     }
 
     // mvvm入口函数，用于整合 数据监听器 _observer、指令解析器 _compile、 连接Obeserver 和 Compile的_watcherTpl
-    function myVue(option = {}) {   // 防止参数为null
+    function myVue(options = {}) {   // 防止参数为null
         this.$options = options;    // 配置挂载
         this.$el = document.querySelector(options.el);  // 获取dom
         this._data = options.data;  // 数据挂载
@@ -65,20 +65,22 @@
     // 重写data 的 get set 更改数据的时候，触发watch 更新视图
     myVue.prototype._observer = function(obj){
         let _this = this;
+        // Object.keys(obj) 可以通过遍历获取到obj里面所有的key，拿到的是一个数组
         Object.keys(obj).forEach(key => {   // 遍历数据
             _this._watcherTpl[key] = {  // 每个数据的订阅池()
                 _directives: []
             };
             let value = obj[key];   // 获取属性值
             let watcherTpl = _this._watcherTpl[key];    // 数据订阅池
-            Object.defineProperty(_this._data, key, {   // 双向绑定最重要的部分，充血数据的set get
+            // Object.defineProperty 方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回这个对象
+            Object.defineProperty(_this._data, key, {   // 双向绑定最重要的部分，重写数据的set get
                 configurable: true, // 可以删除
                 enumerable: true,   // 可以遍历
                 get() {
                     console.log(`${key}获取值：${value}`);
                     return value;   // 获取值的时候 直接返回
                 },
-                set(newVal) {   // 改变值的时候 出发set
+                set(newVal) {   // 改变值的时候 触发set
                     console.log(`${key}更新: ${newVal}`);
                     if (value !== newVal) {
                         value = newVal;
@@ -95,16 +97,19 @@
     // 模版翻译
     myVue.prototype._compile = function (el) {
         let _this = this,
-            nodes = el.children;    // 获取app的dom
-        for(let i = 0; i < nodes.length; i ++) {
+            nodes = el.children,
+            len = nodes.length;    // 获取app的dom
+        for(let i = 0; i < len; i ++) {
             let node = nodes[i];
             if (node.children.length) {
                 _this._compile(node);   // 递归深度遍历 dom 树
             }
 
             // 如果有 v-model属性， 并且元素是 INPUT 或者 TEXTAREA，我们监听它的input事件
+            // hasAttribute返回一个布尔值，指示钙元素是否包含制定的属性（attribute）
             if (node.hasAttribute('v-model') && (node.tagName = 'INPUT' || node.tagName == 'TEXTAREA')) {
-                node.addEventListener('input', key => {
+                // 当input、select、textarea元素的值发生改变的时候，DOM input事件也会同步触发
+                node.addEventListener('input', (key => {
                     let attVal = node.getAttribute('v-model');  // 获取v-model绑定的值
                     _this._watcherTpl[attVal]._directives.push(new Watcher( // 将dom替换成属性的数据并发布订阅 在 set 的时候更新数据
                         node,
@@ -115,7 +120,7 @@
                     return function () {
                         _this._data[attVal] = nodes[key].value; // input值改变的时候 将新值赋给数据 触发set => set触发watch 更新视图
                     }
-                })(i);
+                })(i));
             }
 
             if (node.hasAttribute('v-bind')) {  // v-bind指令
@@ -159,7 +164,7 @@
         this.vm = vm;  // myVue实例
         this.val = val; // 指令对应的值
         this.attr = attr;   // dom 获取值， 如value获取input的值 / innerHTML 获取的值
-        this.update();  // 根因视图
+        this.update();  // 更新视图
     }
 
     Watcher.prototype.update = function() {
