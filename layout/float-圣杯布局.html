@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>float---圣杯布局</title>
+</head>
+<style type="text/css">
+body {
+	margin: 0;
+}
+#header, #footer {
+	width: 100%;
+	height: 300px;
+	background-color: gray;
+	text-align: center;
+}
+
+
+#main {
+	height: 400px;
+}
+
+.left {
+	width: 200px;
+	height: 400px;
+	margin-left: -100%;
+	background-color: yellow;
+	float: left;
+}
+.right {
+	width: 200px;
+	height: 400px;
+	margin-left: -200px;
+	background-color: green;
+	float: left;
+}
+.middle {
+	width: calc(100% - 400px);
+	height: 400px;
+	background-color: red;
+	float: left;
+	padding: 0 200px;
+}
+</style>
+<body>
+	<header id="header">header</header>
+	<div id="main">
+	<!-- 因为渲染的问题 必须优先把middle放在中间 -->
+		<div class="middle">测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+			测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+			测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+			测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+			测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+			测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+			测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+			测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+			v
+			测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+		</div>
+		<div class="left">left</div>
+		<div class="right">right</div>
+	</div>
+	<footer id="footer">footer</footer>
+</body>
+</html>

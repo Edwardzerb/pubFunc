@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>水平居中</title>
+</head>
+<style type="text/css">
+	/*    明确了宽高    */ 
+
+	/*margin*/
+	.margin_container {
+		width: 300px;
+		height: 200px;
+		background: pink;
+		position: relative;
+	}
+	.margin_inner {
+		width: 100px;
+		height: 100px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		background: #fff;
+		margin-top: -50px;
+		margin-left: -50px;
+		text-align: center;
+	}
+
+	/* transform */
+	.transform_container {
+		width: 300px;
+		height: 200px;
+		background-color: pink;
+		position: relative;
+	}
+	.transform_inner {
+		width: 100px;
+		height: 100px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		background-color: #fff;
+		transform: translate(-50%, -50%);
+		text-align: center;
+	}
+
+	/* 不知道宽高 */
+	.container {
+		width: 300px;
+		height: 200px;
+		background-color: red;
+		position: relative;
+		text-align: center;
+	}
+	.inner {
+		display: inline-block;
+		background: blue;
+	}
+</style>
+<body>
+<!-- 宽高已知的情况 -->
+	<!-- margin -->
+	<div class="margin_container">
+		<div class="margin_inner">margin_inner</div>
+	</div>
+	
+	<!-- transform -->
+	<div class="transform_container">
+		<div class="transform_inner">transform_inner</div>
+	</div>
+
+<!-- 宽高未知 -->
+	<div class="container">
+		<div class="inner">inner</div>
+	</div>
+</body>
+</html>
