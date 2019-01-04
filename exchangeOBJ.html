@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let obj = {
+        "flag": 0,
+        "prompt": "登陆成功",
+        "results": [
+            {
+                "retcode": "0",
+                "retmsg": "登陆成功",
+                "record": [
+                    {
+                        "loginID": "CHENJIE101",
+                        "orgName": "",
+                        "roleIds": "NTS_IRMPNTS_IRMPNTS_IRMPNTS_IRMPNTS_IRMP",
+                        "trustDeptName": null,
+                        "deptRef": null,
+                        "trustDeptFuName": null,
+                        "roleNames": "IRMP10847",
+                        "lastFailedTimes": "0"
+                    }
+                ]
+            }
+        ],
+        "exdata": {
+
+        }
+    }
+
+    let allData = [];
+
+    function deepEach1(obj, arrData) {
+
+        if (Array.isArray(obj)) {
+            obj.forEach((item, index) => {
+                console.log('item:', item);
+                if (typeof item != 'object' || item == null) {
+                    let objData = {
+                        label: Object.key(item),
+                        value: Object.key(item)
+                    }
+                    return arrData.push(objData);
+                } else if (typeof item == 'object' && !Array.isArray(item)) {
+                    deepEach(item, arrData);
+                } else if (Array.isArray(item)) {
+                    deepEach(item, arrData);
+                }
+            });
+        } else {
+            Object.keys(obj).forEach((key, index) => {
+                if (typeof obj[key] != 'object' || obj[key] == null) {
+                    console.log('result:', key, obj[key]);
+                    let objData = {
+                        label: key,
+                        value: key
+                    }
+                    return arrData.push(objData);
+                } else if (Array.isArray(obj[key])) {
+                    console.log('array:', obj[key]);
+                    deepEach(obj[key], arrData);
+                    // return arrData.push(obj[key]);
+                } else if (typeof obj[key] == 'object' && !Array.isArray(obj[key])) {
+                    console.log('object:', obj[key]);
+                    deepEach(obj[key], arrData);
+                    // return arrData.push(obj[key]);
+                }
+            });
+        }
+        
+    }
+
+
+    function deepEach(obj, arrData) {
+            Object.keys(obj).forEach((key, index) => {
+                if (typeof obj[key] != 'object' || obj[key] == null) {
+                    let objData = {
+                        label: key,
+                        value: key
+                    }
+                    return arrData.push(objData);
+                } else if (Array.isArray(obj[key])) {
+                    let objData = {
+                        label: key,
+                        value: key,
+                        data: []
+                    };
+                    arrData.push(objData);
+                    deepEach(obj[key], objData.data);
+                } else if (typeof obj[key] == 'object' && !Array.isArray(obj[key])) {
+                    let arr = [];
+                    let objData = {
+                        label: key,
+                        value: key,
+                        data: []
+                    };
+                    arrData.push(objData);
+                    deepEach(obj[key], objData.data);
+                }
+            });
+        }
+    deepEach(obj, allData);
+    console.log('allData:', allData);
+</script>
+</html>
