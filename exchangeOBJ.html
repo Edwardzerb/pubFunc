@@ -81,6 +81,7 @@
 
     function deepEach(obj, arrData) {
             Object.keys(obj).forEach((key, index) => {
+                // 判断当前获取到的对象是否是object，null也是object，需要排除掉
                 if (typeof obj[key] != 'object' || obj[key] == null) {
                     let objData = {
                         label: key,
@@ -88,15 +89,18 @@
                     }
                     return arrData.push(objData);
                 } else if (Array.isArray(obj[key])) {
+                    // 每一个数组都要在里面定一个数组来存储，数组里面的数据
                     let objData = {
                         label: key,
                         value: key,
                         data: []
                     };
                     arrData.push(objData);
+                    // 递归
                     deepEach(obj[key], objData.data);
                 } else if (typeof obj[key] == 'object' && !Array.isArray(obj[key])) {
                     let arr = [];
+                    // 每一个对象，也需要用一个数组来存储这个对象里面装的东西
                     let objData = {
                         label: key,
                         value: key,
