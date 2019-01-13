@@ -96,6 +96,41 @@ class linkedList {
         return currentNode;
     }
 
+    // 寻找中点函数
+    findMiddle() {
+        if (!this.head || !this.head.next) {
+            return this.head;
+        }
+
+        let slow = this.head;
+        let fast = this.head;
+
+        while (fast!= null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    findMiddle2() {
+        if (!this.head || !this.head.next) {
+            return this.head;
+        }
+
+        let index = 1;
+        let currentNode = this.head;
+        console.log(this.length);
+
+        while(Math.floor(index <= this.length / 2)) {
+            // console.log('head:', this.head);
+            currentNode = currentNode.next;
+            index ++;
+        }
+
+        return currentNode;
+    }
+
 
     // 找到最后一个节点
     findLastNode() {
@@ -122,27 +157,27 @@ class linkedList {
     }
 
     // 反转链表
-    reverseList() {
+    reverseList(head) {
         // 定义一个前节点
         let preNode = null;
 
         // this.head 就相当于currentNode一样
         // 判断当前的头节点是否为空
-        while (this.head) {
+        while (head) {
             // console.log('this.head:', this.head);
             // 拿到下一个节点
-            let nextNode = this.head.next;
+            let nextNode = head.next;
             // 把当前的节点指向前一个节点，当这个节点是是原链表的头节点的时候，它指向的就是null
-            this.head.next = preNode;
+            head.next = preNode;
             // 把前一个节点等于当前节点
-            preNode = this.head;
+            preNode = head;
             // 当前的的节点又变成下一个节点
-            this.head = nextNode;
+            head = nextNode;
         }
         // 因为上面判断条件是，当this.head === null 的时候跳出循环，所以需要将this.head重新变为前一个节点
-        this.head = preNode;
-        console.log('this.head:', this.head);
-        return this.head;
+        head = preNode;
+        console.log('this.head:', head);
+        return head;
     }
 
     reverseList_dg(head) {
@@ -174,10 +209,8 @@ class linkedList {
         let currentFast = this.head;
 
         // 快指针先走到尾，如果快指针到尾都没相等，单链表中不存在环
-        // 因为块指针走的是两步，所以判断currentFast这个node节点最好，不要去判断currentNode.next
-        while(currentFast) {
-            // console.log('currentSlow:', currentSlow);
-            // console.log('currentFast:', currentFast);
+        // 因为块指针走的是两步，所以判断currentFast 和next，偶数的情况下要去判断next
+        while(currentFast != null && currentFast.next != null) {
             // 快指针走两步
             currentFast = currentFast.next.next;
             // 慢指针走一步
@@ -185,11 +218,32 @@ class linkedList {
             // 判断快慢指针相等并且不等于头节点的时候，说明这个单链表中有环存在
             if (currentFast == currentSlow && currentFast != this.head) {
                 return true;
-            }
-            
-            // slow = currentSlow.next;
+            }            
         }
         return false;
+    }
+
+    // 判断是否是回文链表
+    isPalindrome() {
+        if (!this.head || !this.head.next)  {
+            return true;
+        }
+
+        // 先拿到当前的头节点
+        let originHead = this.head;
+        let middleNode = this.findMiddle2();
+        middleNode.next = this.reverseList(middleNode.next);
+        let palindNode = middleNode.next;
+        console.log('originHead:', originHead);
+        console.log('palindNode:', palindNode);
+        while(originHead != null && palindNode != null && originHead.element == palindNode.element) {
+            console.log('middleNode:', middleNode);
+            console.log('palindNode:', palindNode);
+            originHead = originHead.next;
+            palindNode = palindNode.next;
+        }
+
+        return palindNode == null;
     }
 
 }

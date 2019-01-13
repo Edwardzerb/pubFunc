@@ -30,6 +30,7 @@
     nList.insertIndex(xiao);
     nList.insertIndex(zeng);
 
+    // ming
     rList.insertIndex(hongs);
     rList.insertIndex(li);
     rList.insertIndex(jun);
@@ -37,6 +38,10 @@
     rList.insertIndex(zeng);
     rList.insertIndex(liu);
     rList.insertIndex(guan);
+    rList.insertIndex(zhang);
+
+    console.log(rList.findMiddle());
+    console.log(rList.findMiddle2());
     // rList.insertCircle();
 
     // nList.reverseList();
@@ -52,18 +57,15 @@
 
     console.log('isLoop:', rList.isLoop());
 
+    let p = new linkedList('a');
+    p.insertIndex('b');
+    // p.insertIndex('c');
+    p.insertIndex('b');
+    p.insertIndex('a');
 
+    console.log('回文字符串：', p.isPalindrome());
 
     
-    // console.log('' + nList);
-    // console.log('tostring:', nList.toString());
-
-    // nList.remove(li);
-    // console.log('' + nList);
-
-    // nList.reverseList(nList);
     
-    
-    // console.log('tostring:', nList.toString());
 </script>
 </html>
