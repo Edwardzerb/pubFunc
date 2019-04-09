@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    
+    // 数组，从下标1开始存储数据
+    let a = [0, 33, 27, 21, 16, 13, 15, 9, 5, 6, 7, 8, 1, 2];
+    // 可以存储的最大数据格式
+    let n = 100;
+    // 堆中已经存储的数据个数
+    let count = a.length - 1;
+
+    function Heap(capacity) {
+        a = capacity + 1;
+        n = capacity;
+        count = 0;
+    }
+
+    function insert(data) {
+        if (count >= 100) {
+            // 堆满了
+            return;
+        }
+
+        ++ count;
+        a[count] = data;
+        i = count;
+        while (i / 2 > 0 && a[i] > a[Math.floor(i / 2)]) {  // 自下往上堆化
+            console.log('a[i]:', a[i]);
+            console.log('a[i / 2]:', a[i / 2]);
+            console.log('i:', i);
+            [a[i], a[Math.floor(i / 2)]] = [a[Math.floor(i / 2)], a[i]];
+            i = i / 2;
+            console.log('a[i / 2]:', a[Math.floor(i / 2)]);
+        }
+    }
+
+    insert(22);
+    console.log(a);
+
+</script>
+</html>

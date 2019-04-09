@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>冒泡排序</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    let arr = [1, 5, 3, 2, 9, 0, 2, 4];
+
+
+    /**
+     * arr 传进来需要排序的数组
+     * 
+     * 最好的情况 O(n)  1,2,3,4,5   只需要循环一次
+     * 最差的情况 O(n^2)    6,5,4,3,2,1 需要6次冒泡
+     * 
+    */
+    function bubbleSort(arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
+
+        for(let i = 0; i < arr.length; i ++) {
+            console.log('i:', i);
+            // 提前退出冒泡循环的标志位
+            let flag = false;
+            for(let j = 0; j < arr.length - i - 1; j ++) {
+                console.log('j:', j);
+                if (arr[j] > arr[j + 1]) {
+                    [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
+                    flag = true;
+                }
+            }
+            // 当某一次循环的时候，没有值的交换，这个时候就说明了是排序是完整的了
+            if (!flag) {
+                break;
+            }
+        }
+        return arr;
+    }
+    
+    let sortArr = bubbleSort(arr);
+    console.log('sortArr:', sortArr);
+    
+
+</script>
+</html>

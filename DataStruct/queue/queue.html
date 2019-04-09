@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script src="linkQueue.js"></script>
+<body>
+    
+</body>
+<script>
+    let ming = { name: '小明', score: 100 },
+    hongs = { name: '小红', score: 88 },
+    jun = { name: '小军', score: 66 },
+    xiao = { name: '小肖', score: 99};
+    
+    let que = new circleQueue();
+    que.enqueue(ming);
+    que.enqueue(hongs);
+    que.enqueue(jun);
+    que.enqueue(xiao);
+
+    que.dequeue();
+
+    console.log(que);
+</script>
+</html>

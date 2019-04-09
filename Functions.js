@@ -34,11 +34,11 @@ let inputDateRange = (date, step = 30, separator = '-') => {
 
   // 传入的 step 是否为数字,否则截图数字部分转化
   // 为什么和 NaN 比较(自身不等性),若是传入的连正则都没法识别,那只能给默认值了
-  Object.prototype.toString.call(step) === '[object Number]'
-    ? (step = parseInt(step, 10))
-    : parseInt(step.replace(/[W\s\b]/g, ''), 10) === NaN
-      ? (step = parseInt(step.replace(/[W\s\b]/g, ''), 10))
-      : (step = 30);
+  Object.prototype.toString.call(step) === '[object Number]' ?
+    (step = parseInt(step, 10)) :
+    parseInt(step.replace(/[W\s\b]/g, ''), 10) === NaN ?
+    (step = parseInt(step.replace(/[W\s\b]/g, ''), 10)) :
+    (step = 30);
 
   // 若是开始时间大于结束时间则结束时间往后追加一天
   startTime > endTime ? (endTime += 24 * 60) : '';
@@ -98,7 +98,7 @@ let type = (obj) => {
     return obj + "";
   }
   return typeof obj === "object" || typeof obj === "function" ?
-         classType[Object.prototype.toString.call(obj)] || "object" : typeof obj;
+    classType[Object.prototype.toString.call(obj)] || "object" : typeof obj;
 }
 
 
@@ -113,7 +113,7 @@ let shallowCopy = function (obj) {
   let newObj = obj instanceof Array ? [] : {};
 
   // 遍历obj，并且判断是obj的属性才拷贝
-  for(let key in obj) {
+  for (let key in obj) {
     if (obj.hasOwnproperty(key)) {
       newObj[key] = obj[key];
     }
@@ -129,7 +129,7 @@ let deepCopy = function (obj) {
 
   let newObj = obj instanceof Array ? [] : {};
 
-  for(let key in obj) {
+  for (let key in obj) {
     if (obj.hasOwnproperty(key)) {
       newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
     }
@@ -147,194 +147,194 @@ var toString = class2type.toString;
 var hasOwn = class2type.hasOwnProperty;
 
 function isPlainObject(obj) {
-    var proto, Ctor;
-    if (!obj || toString.call(obj) !== "[object Object]") {
-        return false;
-    }
-    proto = Object.getPrototypeOf(obj);
-    console.log('proto:', !proto);
-    if (!proto) {
-        return true;
-    }
-    Ctor = hasOwn.call(proto, "constructor") && proto.constructor;
-    return typeof Ctor === "function" && hasOwn.toString.call(Ctor) === hasOwn.toString.call(Object);
+  var proto, Ctor;
+  if (!obj || toString.call(obj) !== "[object Object]") {
+    return false;
+  }
+  proto = Object.getPrototypeOf(obj);
+  console.log('proto:', !proto);
+  if (!proto) {
+    return true;
+  }
+  Ctor = hasOwn.call(proto, "constructor") && proto.constructor;
+  return typeof Ctor === "function" && hasOwn.toString.call(Ctor) === hasOwn.toString.call(Object);
 }
 
 function extend() {
-    // 默认不进行深拷贝
-    var deep = false;
-    var name, options, src, copy, clone, copyIsArray;
-    var length = arguments.length;
-    // 记录要复制的对象的下标
-    var i = 1;
-    // 第一个参数不传布尔值的情况下，target 默认是第一个参数
-    var target = arguments[0] || {};
-    // 如果第一个参数是布尔值，第二个参数是 target
-    if (typeof target == 'boolean') {
-        deep = target;
-        target = arguments[i] || {};
-        i++;
-    }
-    // 如果target不是对象，我们是无法进行复制的，所以设为 {}
-    if (typeof target !== "object" && !isFunction(target)) {
-        target = {};
-    }
+  // 默认不进行深拷贝
+  var deep = false;
+  var name, options, src, copy, clone, copyIsArray;
+  var length = arguments.length;
+  // 记录要复制的对象的下标
+  var i = 1;
+  // 第一个参数不传布尔值的情况下，target 默认是第一个参数
+  var target = arguments[0] || {};
+  // 如果第一个参数是布尔值，第二个参数是 target
+  if (typeof target == 'boolean') {
+    deep = target;
+    target = arguments[i] || {};
+    i++;
+  }
+  // 如果target不是对象，我们是无法进行复制的，所以设为 {}
+  if (typeof target !== "object" && !isFunction(target)) {
+    target = {};
+  }
 
-    // 循环遍历要复制的对象们
-    for (; i < length; i++) {
-        // 获取当前对象
-        options = arguments[i];
-        // 要求不能为空 避免 extend(a,,b) 这种情况
-        if (options != null) {
-            for (name in options) {
-                // 目标属性值
-                src = target[name];
-                // 要复制的对象的属性值
-                copy = options[name];
+  // 循环遍历要复制的对象们
+  for (; i < length; i++) {
+    // 获取当前对象
+    options = arguments[i];
+    // 要求不能为空 避免 extend(a,,b) 这种情况
+    if (options != null) {
+      for (name in options) {
+        // 目标属性值
+        src = target[name];
+        // 要复制的对象的属性值
+        copy = options[name];
 
-                // 解决循环引用
-                if (target === copy) {
-                    continue;
-                }
-
-                // 要递归的对象必须是 plainObject 或者数组
-                if (deep && copy && (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))) {
-                    // 要复制的对象属性值类型需要与目标属性值相同
-                    if (copyIsArray) {
-                        copyIsArray = false;
-                        clone = src && Array.isArray(src) ? src : [];
-
-                    } else {
-                        clone = src && isPlainObject(src) ? src : {};
-                    }
-
-                    target[name] = extend(deep, clone, copy);
-
-                } else if (copy !== undefined) {
-                    target[name] = copy;
-                }
-            }
+        // 解决循环引用
+        if (target === copy) {
+          continue;
         }
-    }
 
-    return target;
+        // 要递归的对象必须是 plainObject 或者数组
+        if (deep && copy && (isPlainObject(copy) || (copyIsArray = Array.isArray(copy)))) {
+          // 要复制的对象属性值类型需要与目标属性值相同
+          if (copyIsArray) {
+            copyIsArray = false;
+            clone = src && Array.isArray(src) ? src : [];
+
+          } else {
+            clone = src && isPlainObject(src) ? src : {};
+          }
+
+          target[name] = extend(deep, clone, copy);
+
+        } else if (copy !== undefined) {
+          target[name] = copy;
+        }
+      }
+    }
+  }
+
+  return target;
 };
 
 
-  function EventEmitter() {
-    // 用Object.create(null)代替空对象{}
-      // 好处是无杂质，不继承原型链的东东
+function EventEmitter() {
+  // 用Object.create(null)代替空对象{}
+  // 好处是无杂质，不继承原型链的东东
+  this._events = Object.create(null);
+}
+
+// 默认最多的绑定次数
+EventEmitter.defaultMaxListeners = 10;
+
+// 将on方法赋值在 addListener
+EventEmitter.prototype.addListener = EventEmitter.prototype.on;
+
+// 放回监听的事件名
+EventEmitter.prototype.eventNames = function () {
+  // 返回的是一个数组
+  // Object.key可以类似for...in一样，返回一个给定对象的自身可枚举属性组成的数组
+  return Object.keys(this._events);
+}
+
+// 设置最大的监听数
+EventEmitter.prototype.setMaxListeners = function (n) {
+  this._count = n;
+}
+
+// 获取最大的监听数
+EventEmitter.prototype.getMaxListeners = function () {
+  return this._count ? this._count : this.defaultMaxListeners;
+}
+
+// 实现监听的方法
+EventEmitter.prototype.on = function (type, cb, flag) {
+  // 默认值，如果没有_events的话，就给它创建一个
+  if (!this._events) {
     this._events = Object.create(null);
   }
 
-  // 默认最多的绑定次数
-  EventEmitter.defaultMaxListeners = 10;
-
-  // 将on方法赋值在 addListener
-  EventEmitter.prototype.addListener = EventEmitter.prototype.on;
-
-  // 放回监听的事件名
-  EventEmitter.prototype.eventNames = function() {
-    // 返回的是一个数组
-    // Object.key可以类似for...in一样，返回一个给定对象的自身可枚举属性组成的数组
-    return Object.keys(this._events);
+  // 不是newListener 就应该让newListener执行以下
+  if (type !== 'newListener') {
+    this._events['newListener'] && this._events['newListener'].forEach(listener => {
+      listener(type);
+    });
   }
 
-  // 设置最大的监听数
-  EventEmitter.prototype.setMaxListeners = function(n) {
-    this._count = n;
-  }
-
-  // 获取最大的监听数
-  EventEmitter.prototype.getMaxListeners = function() {
-    return this._count ? this._count : this.defaultMaxListeners;
-  }
-
-  // 实现监听的方法
-  EventEmitter.prototype.on = function(type, cb, flag) {
-    // 默认值，如果没有_events的话，就给它创建一个
-    if (!this._events) {
-      this._events = Object.create(null);
-    }
-
-    // 不是newListener 就应该让newListener执行以下
-    if (type !== 'newListener') {
-      this._events['newListener'] && this._events['newListener'].forEach(listener => {
-        listener(type);
-      });
-    }
-
-    if (this._events[type]) {
-      if (flag) {
-        this._events[type].unshift(cb);
-      } else {
-        this._events[type].push(cb);
-      }
+  if (this._events[type]) {
+    if (flag) {
+      this._events[type].unshift(cb);
     } else {
-      this._events[type] = [cb];
+      this._events[type].push(cb);
     }
-
-    // 监听的事件不能超过了设置的最大监听数
-    if (this._events[type].length === this.getMaxListeners()) {
-      console.log('warming: 超过了最大的监听数');
-    }
-  };
-
-  // 向前添加
-  EventEmitter.prototype.prependListener = function(type, cb) {
-    this.on(type, cb, true);
-  };
-
-  EventEmitter.prototype.prependOnceListener = function(type, cb) {
-    this.once(type, cb, true);
-  };
-
-  // 监听一次
-  EventEmitter.prototype.once = function(type, cb, flag) {
-    // 先绑定，调用后删除
-    function wrap() {
-      cb(...arguments);
-      this.removeListener(type, wrap);
-    }
-
-    // 自定义属性
-    wrap.listen = cb;
-    this.on(type, wrap, flag);
-  };
-
-  // 删除监听类型
-  EventEmitter.prototype.removeListener = function(type, cb) {
-    if (this._events[type]) {
-      this._events[type] = this._events[type].filter(listener => {
-        return cb !== listener && cb !== listener.listen;
-      });
-    }
-  };
-
-  EventEmitter.prototype.removeAllListener = function() {
-    this._events = Object.create(null);
-  };
-
-  // 返回所有的监听类型
-  EventEmitter.prototype.listeners = function(type) {
-    return this._events[type];
-  };
-
-  // 发布
-  EventEmitter.prototype.emit = function(type, ...args) {
-    if (this._events[type]) {
-      this._events[type].forEach(listener => {
-        listener.call(this, ...args);
-      });
-    }
+  } else {
+    this._events[type] = [cb];
   }
 
-  // let evt = new EventEmitter();
-  // evt.on('fuck', function(data) {
-  //   console.log('data:', data);
-  //   console.log('every people');
-  // });
-  // evt.emit('fuck', {'first': 'jhon', 'second': 'tommy'});
+  // 监听的事件不能超过了设置的最大监听数
+  if (this._events[type].length === this.getMaxListeners()) {
+    console.log('warming: 超过了最大的监听数');
+  }
+};
+
+// 向前添加
+EventEmitter.prototype.prependListener = function (type, cb) {
+  this.on(type, cb, true);
+};
+
+EventEmitter.prototype.prependOnceListener = function (type, cb) {
+  this.once(type, cb, true);
+};
+
+// 监听一次
+EventEmitter.prototype.once = function (type, cb, flag) {
+  // 先绑定，调用后删除
+  function wrap() {
+    cb(...arguments);
+    this.removeListener(type, wrap);
+  }
+
+  // 自定义属性
+  wrap.listen = cb;
+  this.on(type, wrap, flag);
+};
+
+// 删除监听类型
+EventEmitter.prototype.removeListener = function (type, cb) {
+  if (this._events[type]) {
+    this._events[type] = this._events[type].filter(listener => {
+      return cb !== listener && cb !== listener.listen;
+    });
+  }
+};
+
+EventEmitter.prototype.removeAllListener = function () {
+  this._events = Object.create(null);
+};
+
+// 返回所有的监听类型
+EventEmitter.prototype.listeners = function (type) {
+  return this._events[type];
+};
+
+// 发布
+EventEmitter.prototype.emit = function (type, ...args) {
+  if (this._events[type]) {
+    this._events[type].forEach(listener => {
+      listener.call(this, ...args);
+    });
+  }
+}
+
+// let evt = new EventEmitter();
+// evt.on('fuck', function(data) {
+//   console.log('data:', data);
+//   console.log('every people');
+// });
+// evt.emit('fuck', {'first': 'jhon', 'second': 'tommy'});
 
 /**
  * [unique description]
@@ -346,7 +346,7 @@ function extend() {
 function unique(array, isSorted, iteratee) {
   let res = [];
   let seen = [];
-  for(let i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     let value = array[i];
     // 判断是否有需要对数组进行操作的函数
     let computed = iteratee ? iteratee(value, i, array) : value;
@@ -360,7 +360,7 @@ function unique(array, isSorted, iteratee) {
       // 把当前这个数给seen，computed就会变成下一个
       seen = computed;
 
-    } else if (iteratee) {  // 如果有操作的函数
+    } else if (iteratee) { // 如果有操作的函数
       // 查找seen数组里是否有computed
       if (seen.indexOf(computed) === -1) {
         // 没有 就都添加
@@ -381,7 +381,7 @@ class Set {
   constructor() {
     this.items = {};
     // 记录集合中成员的数量
-    this.size = 0;	
+    this.size = 0;
   }
 
   // has(val) 查看是否拥有该元素
@@ -396,7 +396,7 @@ class Set {
     if (!this.has(val)) {
       this.items[val] = val;
       // 没添加一个元素，需要加一个
-      this.size ++;
+      this.size++;
       return true;
     }
     // 如果该元素已经存在集合中
@@ -408,7 +408,7 @@ class Set {
     if (this.has(val)) {
       // 将items对象中的属性删除
       delete this.items[val];
-      this.size --;
+      this.size--;
       return true;
     }
     return false;
@@ -434,7 +434,7 @@ class Set {
 
   // forEach Set结构的键名就是键值
   forEach(fn, context) {
-    for(let i = 0; i < this.items.length; i++) {
+    for (let i = 0; i < this.items.length; i++) {
       let item = Object.keys(this.items)[i];
       fn.call(context, item, item, this.items);
     }
@@ -445,12 +445,12 @@ class Set {
   union(other) {
     let union = new Set();
     let values = this.values();
-    for(let i = 0; i < values.length; i++) {
+    for (let i = 0; i < values.length; i++) {
       union.add(values[i]);
     }
     // 将values重新赋值为新的集合
     values = other.values();
-    for(let i = 0; i < values.length; i++) {
+    for (let i = 0; i < values.length; i++) {
       union.add(values[i]);
     }
 
@@ -461,7 +461,7 @@ class Set {
   intersect(other) {
     let intersect = new Set();
     let values = this.values();
-    for(let i = 0; i < values.length; i++) {
+    for (let i = 0; i < values.length; i++) {
       // 查看在other中是否存在
       if (other.has(values[i])) {
         // 存在 就往里面添加元素
@@ -475,7 +475,7 @@ class Set {
   different(other) {
     let different = new Set();
     let values = this.values();
-    for(let i = 0; i < this.values.length; i++) {
+    for (let i = 0; i < this.values.length; i++) {
       if (!other.has(values[i])) {
         different.add(values[i]);
       }
@@ -499,7 +499,7 @@ class Map {
   // set(key, val), 当有相同的key时，会覆盖前一个值
   set(key, value) {
     tihs.items[key] = value;
-    this.size ++;
+    this.size++;
   }
 
   // get 
@@ -512,7 +512,7 @@ class Map {
   delete(key) {
     if (this.has(key)) {
       delete this.items[key];
-      this.size --;
+      this.size--;
       return true;
     }
     return false;
@@ -533,36 +533,36 @@ class Map {
   }
 
   forEach(fn, context) {
-    for(let i = 0; i < this.items.length; i++) {
+    for (let i = 0; i < this.items.length; i++) {
       let key = Object.keys(this.items)[i];
       let value = Object.value(this.items)[i];
       fn.call(context, key, value, this.items);
     }
   }
-// try {
-//   console.log(1);
-//   console.log(1);
-//   console.log(1);
-//   console.log(1);
-//   console.log(1);
-//   console.log(1);
-//   let a = 2;
-//   try {
-//     let a = 3;
-//   } catch(err) {
-//     console.log('err:', err);
-//   }
-// } catch(err) {
-//   console.log('err:', err);
-// }
+  // try {
+  //   console.log(1);
+  //   console.log(1);
+  //   console.log(1);
+  //   console.log(1);
+  //   console.log(1);
+  //   console.log(1);
+  //   let a = 2;
+  //   try {
+  //     let a = 3;
+  //   } catch(err) {
+  //     console.log('err:', err);
+  //   }
+  // } catch(err) {
+  //   console.log('err:', err);
+  // }
 
-
+}
 let arr = [1, 9, 2, 3, 0, 6, 4, 99, 1];
 
 // 冒泡
 function bubbleSort(arr) {
-  for(let i = 0; i < arr.length; i++) {
-    for(let j = 0; j < arr.length - 1 - i; j++) {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length - 1 - i; j++) {
       if (arr[j + 1] < arr[j]) {
         [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
       }
@@ -578,17 +578,17 @@ let arr1 = [1, 9, 2, 3, 0, 6, 4, 99, 1];
 function insertSort(arr) {
   var preIndex, current;
   // 快排 需要取出第一个数字去跟后面的比较，所以i = 1
-  for(let i = 1; i < arr.length; i++) {
+  for (let i = 1; i < arr.length; i++) {
     // 记录前一个坐标
     preIndex = i - 1;
     // 记录当前的值
     current = arr[i];
     // 如果前一个值大于当前的值
-    while(preIndex >= 0 && arr[preIndex] > current) {
+    while (preIndex >= 0 && arr[preIndex] > current) {
       // 把前面的值和后面的值互相换一下位置
       arr[preIndex + 1] = arr[preIndex];
       // 一直循环
-      preIndex --;
+      preIndex--;
     }
     // 最后不符合上面那个条件的时候，就把current给它
     arr[preIndex + 1] = current;
@@ -598,6 +598,7 @@ function insertSort(arr) {
 console.log('insertSort:', insertSort(arr1));
 
 let arr3 = [1, 9, 2, 3, 0, 6, 4, 99, 1];
+
 function quickSort(arr) {
   if (arr.length <= 1) {
     return arr;
@@ -608,7 +609,7 @@ function quickSort(arr) {
   let pivot = arr.splice(pivotIndex, 1)[0];
   let leftArr = [],
     rightArr = [];
-  for(let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     // 比较取出来的这个值的大小，比中间值小的往左装，大的往右装
     if (arr[i] < pivot) {
       leftArr.push(arr[i]);
@@ -616,9 +617,33 @@ function quickSort(arr) {
       rightArr.push(arr[i]);
     }
   }
-  
+
   // 一直递归直到最后完成
   // concat是因为需要把中间值给粘回去
   return quickSort(leftArr).concat([pivot], quickSort(rightArr));
 }
 console.log('quickSort:', quickSort(arr3));
+
+
+function getTimestamp() {
+  let myDate = new Date();
+  let year = myDate.getYear();
+  let month = myDate.getMonth() + 1;
+  let date = myDate.getDate();
+  let hour = myDate.getHours();
+  let minute = myDate.getMinutes();
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (date >= 0 && date <= 9) {
+    date = "0" + date;
+  }
+  if (hour >= 0 && hour <= 9) {
+    hour = "0" + hour;
+  }
+  if (minute >= 0 && minute <= 9) {
+    minute = "0" + minute;
+  }
+  let currentdate = year + month + date + hour + minute;
+  return currentdate;
+}

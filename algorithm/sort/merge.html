@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function merge(left, right) {
+        // console.log('merge --- left:', left, '--- right:', right);
+        let result = [];
+        // 每次shift的使用left和shift数组的长度都会减1
+        while (left.length > 0 && right.length > 0) {
+            // 进行排序
+            if (left[0] > right[0]) {
+                result.push(left.shift());
+            } else {
+                result.push(right.shift());
+            }
+        }
+        console.log('left:', left, 'right:', right);
+        result = result.concat(left, right);
+        console.log('result:', result);
+        return result;
+    }
+
+    function mergeSort(arr) {
+        // 判断跳出递归的条件，数组最小的长度都要是2，当数组长度的长度小于2的时候，不在进入这个递归
+        if (arr.length <= 1) return arr;
+        // 每次都取中间点，一直到数组只剩下2个元素
+        let middle = Math.floor(arr.length / 2);
+        let left = arr.slice(0, middle);
+        let right = arr.slice(middle);
+        // console.log('mergeSort: --- left:', left, '--- right:', right);
+        // 当数组只有两个元素的时候进入merge函数
+        return merge(mergeSort(left), mergeSort(right));
+    }
+
+    let arr = [1, 5, 3, 2, 9, 0, 2, 4];
+    console.log(mergeSort(arr));
+
+
+
+
+
+
+    // function merge(left, right) {
+    //     let result;
+    //     while (left > 0 && right > 0 ) {
+    //         if (left[0] > right[0]) {
+    //             result.push(left.shift());
+    //         } else {
+    //             result.push(right.shift());
+    //         }
+    //     }
+
+    //     return result.concat(left, right);
+    // }
+
+
+    // function mergeSort2(arr) {
+    //     if (arr.length < 2) {
+    //         return arr;
+    //     }
+    //     let middle = Math.floor(arr.length / 2);
+    //     let left = arr.slice(0, middle);
+    //     let right = arr.slice(middle);
+
+    //     // mergeSort2(left);
+    //     // mergeSort2(right);
+
+    //     merge(mergeSort(left), mergeSort2(right));
+    // }
+</script>
+
+</html>

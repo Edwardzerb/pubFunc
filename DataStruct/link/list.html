@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script src="./linkedList.js"></script>
+<script>
+    // let ming = { name: '小明', score: 100 },
+    // hongs = { name: '小红', score: 88 },
+    // jun = { name: '小军', score: 66 },
+    // xiao = { name: '小肖', score: 99},
+    // zeng = { name: '小曾', score: 99},
+    // liu = { name: '小刘', score: 99},
+    // guan = { name: '小关', score: 99},
+    // zhang = { name: '小张', score: 99},
+    // li = { name: '小李', score: 50 };
+
+    // let nList = new linkedList(ming);
+    let rList = new linkedList(1);
+
+    rList.insertIndex(3);
+    rList.insertIndex(5);
+    rList.insertIndex(4);
+    rList.insertIndex(0);
+    rList.insertIndex(2);
+    rList.insertIndex(9);
+    rList.insertIndex(8);
+    rList.insertIndex(9);
+
+    // nList.insertIndex(hongs);
+    // nList.insertIndex(li);
+    // nList.insertIndex(jun);
+    // nList.insertIndex(xiao);
+    // nList.insertIndex(zeng);
+
+    // // ming
+    // rList.insertIndex(hongs);
+    // rList.insertIndex(li);
+    // rList.insertIndex(jun);
+    // rList.insertIndex(xiao);
+    // rList.insertIndex(zeng);
+    // rList.insertIndex(liu);
+    // rList.insertIndex(guan);
+    // rList.insertIndex(zhang);
+
+    // console.log(rList.findMiddle());
+    // console.log(rList.findMiddle2());
+    // rList.insertCircle();
+
+    // nList.reverseList();
+    // nList.display();
+    // for(let i = 0; i < nList.length; i++) {
+        // console.log(nList.reverseList())
+        // rList.insertIndex(nList.reverseList());
+    // }
+    
+    // rList.display();
+    // rList.reverseList_dg(rList.head);
+    // rList.display();
+
+    // console.log('isLoop:', rList.isLoop());
+
+    // let p = new linkedList('a');
+    // p.insertIndex('b');
+    // // p.insertIndex('c');
+    // p.insertIndex('b');
+    // p.insertIndex('a');
+
+    // console.log('回文字符串：', p.isPalindrome());
+
+    
+    // let arr = [1,3,2,4,7,5,6];
+
+    // for(let i = 0; i < 7; i++) {
+    //     rList.insertIndex(arr[i]);
+    // }
+    // console.log(rList.head);
+    rList.display();
+    // let li = rList.reverseList2(rList.head , 2, 4);
+     nl = rList.sortList(rList.head);
+    console.log(nl);
+    rList.display(nl.head);
+</script>
+</html>

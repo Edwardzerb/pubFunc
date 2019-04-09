@@ -1,76 +1,305 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title></title>
 </head>
+
 <body>
-	
+
 </body>
+<script src="./Functions.js"></script>
 <script type="text/javascript">
-	let arr = [1, 9, 2, 3, 0, 6, 4, 99, 1];
+	// let arr = [1, 9, 2, 3, 0, 6, 4, 99, 1];
 
-	// 冒泡
-	function bubbleSort(arr) {
-		for(let i = 0; i < arr.length; i++) {
-			for(let j = 0; j < arr.length - 1 - i; j++) {
-				if (arr[j + 1] < arr[j]) {
-					[arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
+	// // 冒泡
+	// function bubbleSort(arr) {
+	// 	for (let i = 0; i < arr.length; i++) {
+	// 		for (let j = 0; j < arr.length - 1 - i; j++) {
+	// 			if (arr[j + 1] < arr[j]) {
+	// 				[arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
+	// 			}
+	// 		}
+	// 	}
+	// 	return arr;
+	// }
+
+	// console.log('bubbleSort:', bubbleSort(arr));
+
+	// let arr1 = [1, 9, 2, 3, 0, 6, 4, 99, 1];
+	// // 插入
+	// function insertSort(arr) {
+	// 	var preIndex, current;
+	// 	// 快排 需要取出第一个数字去跟后面的比较，所以i = 1
+	// 	for (let i = 1; i < arr.length; i++) {
+	// 		// 记录前一个坐标
+	// 		preIndex = i - 1;
+	// 		// 记录当前的值
+	// 		current = arr[i];
+	// 		// 如果前一个值大于当前的值
+	// 		while (preIndex >= 0 && arr[preIndex] > current) {
+	// 			// 把前面的值和后面的值互相换一下位置
+	// 			arr[preIndex + 1] = arr[preIndex];
+	// 			// 一直循环
+	// 			preIndex--;
+	// 		}
+	// 		// 最后不符合上面那个条件的时候，就把current给它
+	// 		arr[preIndex + 1] = current;
+	// 	}
+	// 	return arr;
+	// }
+	// console.log('insertSort:', insertSort(arr1));
+
+	// let arr3 = [1, 9, 2, 3, 0, 6, 4, 99, 1];
+
+	// function quickSort(arr) {
+	// 	if (arr.length <= 1) {
+	// 		return arr;
+	// 	}
+	// 	// 对数组取半操作
+	// 	let pivotIndex = Math.floor(arr.length / 2);
+	// 	// 把中间数从原数组中剔除出来
+	// 	let pivot = arr.splice(pivotIndex, 1)[0];
+	// 	let leftArr = [],
+	// 		rightArr = [];
+	// 	for (let i = 0; i < arr.length; i++) {
+	// 		// 比较取出来的这个值的大小，比中间值小的往左装，大的往右装
+	// 		if (arr[i] < pivot) {
+	// 			leftArr.push(arr[i]);
+	// 		} else {
+	// 			rightArr.push(arr[i]);
+	// 		}
+	// 	}
+
+	// 	// 一直递归直到最后完成
+	// 	// concat是因为需要把中间值给粘回去
+	// 	return quickSort(leftArr).concat([pivot], quickSort(rightArr));
+	// }
+	// console.log('quickSort:', quickSort(arr3));
+
+	// function getTimestamp() {
+	// 	let myDate = new Date();
+	// 	let year = myDate.getYear();
+	// 	year = year.toString().substr(1,2);
+	// 	console.log('yesr:', myDate.getFullYear());
+	// 	let month = myDate.getMonth() + 1;
+	// 	let dates = myDate.getDate();
+	// 	let hour = myDate.getHours();
+	// 	let minute = myDate.getMinutes();
+	// 	if (month >= 1 && month <= 9) {
+	// 		month = "0" + month;
+	// 	}
+	// 	if (dates >= 0 && dates <= 9) {
+	// 		dates = "0" + dates;
+	// 	}
+	// 	if (hour >= 0 && hour <= 9) {
+	// 		hour = "0" + hour;
+	// 	}
+	// 	if (minute >= 0 && minute <= 9) {
+	// 		minute = "0" + minute;
+	// 	}
+	// 	let currentdate = year + month + dates + hour + minute;
+	// 	return currentdate;
+	// }
+	// console.log(getTimestamp());
+
+
+
+	let rawJSON = [
+		{
+			mock: 'mocka',
+			remark: 'remarka',
+			type: '4',
+			name: 'queryVO',
+			data: [
+				{
+					mock: 'mock1a',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1'
+				},
+				{
+					mock: 'mock1b',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1'
+				},
+				{
+					mock: 'mock1c',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1',
+					data: [
+						{
+							mock: 'mock2a',
+							remark: 'remark2a',
+							type: '41',
+							name: 'queryVO2'
+						},
+						{
+							mock: 'mock2b',
+							remark: 'remark2b',
+							type: '41',
+							name: 'queryVO2'
+						}
+					]
 				}
-			}
+
+			]
+		},
+		{
+			mock: 'mockb',
+			remark: 'remarkb',
+			type: '4',
+			name: 'queryVO',
+			data: [
+				{
+					mock: 'mock1a',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1'
+				},
+				{
+					mock: 'mock1b',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1'
+				},
+				{
+					mock: 'mock1c',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1',
+					data: [
+						{
+							mock: 'mock2a',
+							remark: 'remark2a',
+							type: '41',
+							name: 'queryVO2'
+						},
+						{
+							mock: 'mock2b',
+							remark: 'remark2b',
+							type: '41',
+							name: 'queryVO2'
+						}
+					]
+				}
+
+			]
+		},
+		{
+			mock: 'mockc',
+			remark: 'remarkc',
+			type: '4',
+			name: 'queryVO',
+			data: [
+				{
+					mock: 'mock1a',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1'
+				},
+				{
+					mock: 'mock1b',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1'
+				},
+				{
+					mock: 'mock1c',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1',
+					data: [
+						{
+							mock: 'mock2a',
+							remark: 'remark2a',
+							type: '41',
+							name: 'queryVO2'
+						},
+						{
+							mock: 'mock2b',
+							remark: 'remark2b',
+							type: '41',
+							name: 'queryVO2'
+						}
+					]
+				}
+
+			]
 		}
-		return arr;
+	]
+
+	let rawJSON1 = [
+		{
+			mock: 'mocka',
+			remark: 'remark',
+			type: '4',
+			name: 'queryVO',
+			data: [
+				{
+					mock: 'mock1a',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1'
+				},
+				{
+					mock: 'mock1b',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1'
+				},
+				{
+					mock: 'mock1c',
+					remark: 'remark1',
+					type: '41',
+					name: 'queryVO1',
+					data: [
+						{
+							mock: 'mock2a',
+							remark: 'remark2a',
+							type: '41',
+							name: 'queryVO2'
+						},
+						{
+							mock: 'mock2b',
+							remark: 'remark2b',
+							type: '41',
+							name: 'queryVO2'
+						}
+					]
+				}
+
+			]
+		}
+	]
+
+	function inputParam(bodyData) {
+		let bodyParamCopy = bodyData;
+		let alldata = [];
+		if (bodyParamCopy != [] && bodyParamCopy) {
+			bodyParamCopy.forEach(bdItem => {
+				let everyRaw = {};
+				let singleData = [];
+				everyRaw[bdItem.name] = '';
+				if (bdItem.remark) {
+					everyRaw.remark = bdItem.remark;
+				}
+				everyRaw.type = bdItem.type;
+				if (bdItem.data != [] && bdItem.data) {
+					singleData = inputParam(bdItem.data);
+					everyRaw.data = singleData;
+					alldata.push(everyRaw);
+				} else {
+					alldata.push(everyRaw);
+				}
+			});
+		}
+		return alldata;
 	}
 
-	console.log('bubbleSort:', bubbleSort(arr));
-
-	let arr1 = [1, 9, 2, 3, 0, 6, 4, 99, 1];
-	// 插入
-	function insertSort(arr) {
-		var preIndex, current;
-		// 快排 需要取出第一个数字去跟后面的比较，所以i = 1
-		for(let i = 1; i < arr.length; i++) {
-			// 记录前一个坐标
-			preIndex = i - 1;
-			// 记录当前的值
-			current = arr[i];
-			// 如果前一个值大于当前的值
-			while(preIndex >= 0 && arr[preIndex] > current) {
-				// 把前面的值和后面的值互相换一下位置
-				arr[preIndex + 1] = arr[preIndex];
-				// 一直循环
-				preIndex --;
-			}
-			// 最后不符合上面那个条件的时候，就把current给它
-			arr[preIndex + 1] = current;
-		}
-		return arr;
-	}
-	console.log('insertSort:', insertSort(arr1));
-
-	let arr3 = [1, 9, 2, 3, 0, 6, 4, 99, 1];
-	function quickSort(arr) {
-		if (arr.length <= 1) {
-			return arr;
-		}
-		// 对数组取半操作
-		let pivotIndex = Math.floor(arr.length / 2);
-		// 把中间数从原数组中剔除出来
-		let pivot = arr.splice(pivotIndex, 1)[0];
-		let leftArr = [],
-			rightArr = [];
-		for(let i = 0; i < arr.length; i++) {
-			// 比较取出来的这个值的大小，比中间值小的往左装，大的往右装
-			if (arr[i] < pivot) {
-				leftArr.push(arr[i]);
-			} else {
-				rightArr.push(arr[i]);
-			}
-		}
-		
-		// 一直递归直到最后完成
-		// concat是因为需要把中间值给粘回去
-		return quickSort(leftArr).concat([pivot], quickSort(rightArr));
-	}
-	console.log('quickSort:', quickSort(arr3));
+	console.log(inputParam(rawJSON));
 </script>
+
 </html>

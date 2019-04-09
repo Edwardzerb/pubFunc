@@ -1,6 +1,6 @@
 class Node {
-    constructor(element) {
-        this.element = element;
+    constructor(val) {
+        this.val = val;
         this.next = null;
 
     }
@@ -55,11 +55,11 @@ class linkedList {
     // 移除指定节点
     remove(item) {
         let currentNode = this.head;
-        while (currentNode.element != item) {
+        while (currentNode.val != item) {
             currentNode = currentNode.next;
         }
         // console.log('pre:', this.findPreNode(currentNode));
-        this.findPreNode(currentNode.element).next = currentNode.next;
+        this.findPreNode(currentNode.val).next = currentNode.next;
         currentNode.next = null;
 
         this.length--;
@@ -68,8 +68,8 @@ class linkedList {
     // 根据元素找到这个元素所在的位置
     find(item) {
         let currentNode = this.head;
-        console.log(currentNode.element, item);
-        while (currentNode.element !== item) {
+        console.log(currentNode.val, item);
+        while (currentNode.val !== item) {
             if (!currentNode.next) {
                 // throw Error
                 throw Error('找不到这个元素');
@@ -83,7 +83,7 @@ class linkedList {
     findPreNode(item) {
         let currentNode = this.head;
         // 当前节点不为空、当前节点的下一个节点不为空、当前节点的下一个节点不等于 item
-        while (currentNode && currentNode.next && currentNode.next.element !== item) {
+        while (currentNode && currentNode.next && currentNode.next.val !== item) {
             // 判断一下下一个节点是不是最后一个节点
             if (currentNode.next) {
                 currentNode = currentNode.next;
@@ -105,7 +105,7 @@ class linkedList {
         let slow = this.head;
         let fast = this.head;
 
-        while (fast!= null && fast.next != null) {
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
@@ -122,10 +122,10 @@ class linkedList {
         let currentNode = this.head;
         console.log(this.length);
 
-        while(Math.floor(index <= this.length / 2)) {
+        while (Math.floor(index <= this.length / 2)) {
             // console.log('head:', this.head);
             currentNode = currentNode.next;
-            index ++;
+            index++;
         }
 
         return currentNode;
@@ -144,14 +144,14 @@ class linkedList {
         // 返回最后一个节点
         return currentNode;
     }
-    
+
 
 
     // 重写toString方法
-    display() {
-        var currNode = this.head;
-        while (currNode !== null){
-            console.log( currNode.element );
+    display(head) {
+        var currNode = head ? head : this.head;
+        while (currNode !== null) {
+            console.log(currNode.val);
             currNode = currNode.next;
         }
     }
@@ -181,21 +181,21 @@ class linkedList {
     }
 
     reverseList_dg(head) {
-        
+
+
+        // a -> b -> c -> d -> e -> null -> e -> d -> c -> b -> a
         if (!head || !head.next) {
-            
+
             return head;
         }
-        
         // console.log('____head:', head);
         // 递归把每一个节点传递进去
         var newHead = this.reverseList_dg(head.next);
-        // console.log('dg_____newHead:', newHead);
-        console.log('head ___ head:', head);
+        // 将后一个链节点的指针指向前一个节点
         head.next.next = head;
-        console.log('head.next.next:', head.next.next);
+        // 将原链表中的前一个节点指向后一个节点的指向关系断开
         head.next = null;
-        
+
         this.head = newHead;
         return newHead;
     }
@@ -210,7 +210,7 @@ class linkedList {
 
         // 快指针先走到尾，如果快指针到尾都没相等，单链表中不存在环
         // 因为块指针走的是两步，所以判断currentFast 和next，偶数的情况下要去判断next
-        while(currentFast != null && currentFast.next != null) {
+        while (currentFast != null && currentFast.next != null) {
             // 快指针走两步
             currentFast = currentFast.next.next;
             // 慢指针走一步
@@ -218,14 +218,14 @@ class linkedList {
             // 判断快慢指针相等并且不等于头节点的时候，说明这个单链表中有环存在
             if (currentFast == currentSlow && currentFast != this.head) {
                 return true;
-            }            
+            }
         }
         return false;
     }
 
     // 判断是否是回文链表
     isPalindrome() {
-        if (!this.head || !this.head.next)  {
+        if (!this.head || !this.head.next) {
             return true;
         }
 
@@ -236,7 +236,7 @@ class linkedList {
         let palindNode = middleNode.next;
         console.log('originHead:', originHead);
         console.log('palindNode:', palindNode);
-        while(originHead != null && palindNode != null && originHead.element == palindNode.element) {
+        while (originHead != null && palindNode != null && originHead.val == palindNode.val) {
             console.log('middleNode:', middleNode);
             console.log('palindNode:', palindNode);
             originHead = originHead.next;
@@ -246,4 +246,126 @@ class linkedList {
         return palindNode == null;
     }
 
+    reverseList2(head, m, n) {
+        if (m == n) return head;
+        const guard = new Node(null);
+        guard.next = head;
+
+        let current = guard;
+        let index = 0;
+
+        let tempLinkedList = null;
+        let leftHandle = null;
+        let rightHandle = null;
+        let last = null;
+
+        while (current) {
+            if (index === m - 1) {
+                
+                const temp = current.next;
+                current.next = null;
+                leftHandle = current;
+                current = temp;
+                console.log('m - 1:', current);
+            } else if (index === m) {
+                
+                const temp = current.next;
+                current.next = null;
+
+                tempLinkedList = current;
+                last = current;
+                current = temp;
+                console.log('m:', current);
+            } else if (index > m && index <= n) {
+                console.log('m> n<:', current);
+                const temp = current.next;
+                current.next = tempLinkedList;
+                tempLinkedList = current;
+                current = temp;
+                if (index === n) {
+                    rightHandle = temp;
+                }
+            } else {
+                current = current.next;
+            }
+
+            index++;
+        }
+        console.log('guard.next:', guard.next);
+        console.log('leftHandle:', leftHandle);
+        console.log('last:', last);
+        console.log('tempLinkedList:', tempLinkedList);
+        console.log('rightHandle:', rightHandle);
+        leftHandle.next = tempLinkedList;
+        console.log('guard.next:', guard.next);
+        last.next = rightHandle;
+
+        return guard.next;
+    }
+
+
+    sortList(head) {
+        if(!head || !head.next) {
+            return head;
+        }
+        
+        return this.mergeSort(head);
+    };
+    
+    
+    mergeSort(head) {
+        if(!head || !head.next) {
+            return head;
+        }
+        // console.log('head:', head);
+        let slow = new Node(null);
+        let fast = new Node(null);
+        let pre = new Node(null);
+        let left = new Node(null);
+        let right = new Node(null);
+        slow = head;
+        fast = head;
+        pre =  head;
+        
+        while(fast != null && fast.next != null) {
+            pre = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+            // console.log('slow:', slow, 'fast:', fast);
+        }
+        pre.next = null;
+        // console.log('head:', head, 'slow:', slow);
+        left = this.mergeSort(head);
+        right = this.mergeSort(slow);
+        // console.log(left, right);
+        return this.merge(left, right);
+    }
+    
+    merge(left, right) {
+        console.log('left:', left, 'right:', right);
+        let result = new Node(0);
+        let current = result;
+        while(left && right) {
+            if(left.val <= right.val) {
+                current.next = left;
+                current = current.next;
+                left = left.next;
+            } else {
+                current.next = right;
+                current = current.next;
+                right = right.next;
+            }
+        }
+        
+        if(left) {
+            current.next = left;
+        }
+        if(right) {
+            current.next = right;
+        }
+        // console.log('result:', result.next);
+        return result.next;
+    }
+
 }
+// export default linkedList;

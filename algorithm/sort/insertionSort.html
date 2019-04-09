@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let arr1 = [1, 5, 3, 2, 9, 0, 2, 4];
+
+    function insertionSort(arr) {
+        for(let i = 1; i < arr.length; i++) {
+            // 保存当前要做插入的数字
+            let current = arr[i];
+            // 从前一个开始
+            let j = i - 1;
+            // 这里分为两个区域，一个是拿数字区域，一个是插入区域
+            for(; j >=0; j--) {
+                // 拿着要插入的数字跟前 main意义比较
+                if (arr[j] > current) {
+                    // 往前挪
+                   arr[j + 1] = arr[j];
+                } else {    // 没有 就退出, 因为前面的数字都已经是排好序的了，只要有一个比它小，就全都比他小了
+                    break;
+                }
+            }
+            //  跟着前面退出的的那个值赋值
+            arr[j + 1] = current;
+        }
+        return arr;
+    }
+
+    function insert(arr) {
+        for(let i = 1; i < arr.length; i++) {
+            let current = arr[i];
+            let j = i - 1;
+            while(j >= 0) {
+                if (arr[j] > current) {
+                    arr[j + 1] = arr[j];
+                } else {
+                    break;
+                }
+                j --;
+            }
+            arr[j + 1] = current;
+        }
+        return arr;
+    }
+
+    console.log('insertionSort:', insert(arr1));
+
+</script>
+</html>

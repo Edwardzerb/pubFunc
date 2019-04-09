@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script src="./stackList.js"></script>
+<script>
+    let stack = new stackList(4);
+
+    let ming = { name: '小明', score: 100 },
+    hongs = { name: '小红', score: 88 },
+    jun = { name: '小军', score: 66 },
+    xiao = { name: '小肖', score: 99};
+
+    stack.push(ming);
+    stack.push(hongs);
+    stack.push(jun);
+    stack.push(xiao);
+
+    console.log('stack', stack);
+
+
+    stack.pop();
+    stack.pop();
+    stack.pop();
+    stack.pop();
+
+    console.log('stack', stack);
+
+
+
+</script>
+</html>

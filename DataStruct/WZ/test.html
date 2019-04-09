@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script src="./linkedlist/SinglyLinkedList.js"></script>
+<script>
+let link = new LinkedList();
+let ming = { name: '小明', score: 100 },
+    hongs = { name: '小红', score: 88 },
+    jun = { name: '小军', score: 66 },
+    xiao = { name: '小肖', score: 99},
+    zeng = { name: '小曾', score: 99},
+    liu = { name: '小刘', score: 99},
+    guan = { name: '小关', score: 99},
+    zhang = { name: '小张', score: 99},
+    li = { name: '小李', score: 50 };
+
+    link.insertLast(ming);
+    link.insertLast(hongs);
+    link.insertLast(jun);
+
+    link.insertValue(xiao, ming);
+    link.insertIndex(zeng, 2);
+
+    link.remove(xiao);
+
+    link.display();
+    console.log('link.head:', link.head);
+    link.reverse(link.head);
+
+    link.display();
+
+</script>
+</html>
